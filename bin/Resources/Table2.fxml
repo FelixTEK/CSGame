@@ -62,8 +62,8 @@
                   <DropShadow blurType="ONE_PASS_BOX" />
                </effect>
             </Label>
-            <ProgressBar fx:id="pgbEnemyHp" layoutX="136.0" layoutY="68.0" prefHeight="18.0" prefWidth="236.0" progress="0.0" />
-            <ProgressBar fx:id="pgbPlayerHp" layoutX="136.0" layoutY="542.0" prefHeight="18.0" prefWidth="236.0" progress="0.0" />
+            <ProgressBar fx:id="pgbEnemyHp" layoutX="136.0" layoutY="68.0" prefHeight="18.0" prefWidth="236.0" progress="1.0" />
+            <ProgressBar fx:id="pgbPlayerHp" layoutX="136.0" layoutY="542.0" prefHeight="18.0" prefWidth="236.0" progress="1.0" />
          </children>
       </Pane>
    </center>
