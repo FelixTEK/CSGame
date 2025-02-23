@@ -1,6 +1,7 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.Glow;
@@ -68,10 +69,20 @@ public class TableController {
     @FXML
     private ProgressBar pgbPlayerHp;
     
+    @FXML
+    private Button btnReDeck;
+    
+    @FXML
+    private Button btnNewGame;
+    
+    @FXML
+    private Button btnExit;
+      
 
     private final Map<ImageView, Card> cardMap = new HashMap<>();
     private final static Image backImage = new Image(CardType.getBackImagePath());  // รูปหลังไพ่
     private GameManagement game = new GameManagement();
+    private int EnemyFlipTime = 0; //Enemy AutoFlip 1-5 time
    
     /**
      * 
@@ -88,14 +99,16 @@ public class TableController {
         setEnemyCharacter();
         setAllBackImage();
         setPlayerDeck();
+        setEnemyDeck();
+        setReDeckVisible();
+        setReDeckEvent();
+        setNewGameVisible();
+        setNewGameEvent();
+        setExitVisible();
+        setExitEvent();
 
-        // ตั้งค่าให้คลิกเพื่อพลิกไพ่
-        imgCard06.setOnMouseClicked(event -> flipCard(imgCard06));
-        imgCard07.setOnMouseClicked(event -> flipCard(imgCard07));
-        imgCard08.setOnMouseClicked(event -> flipCard(imgCard08));
-        imgCard09.setOnMouseClicked(event -> flipCard(imgCard09));
-        imgCard10.setOnMouseClicked(event -> flipCard(imgCard10));
-        
+        setPlayerClick(true);
+                
         imgCard06.setOnMouseEntered(event -> MouseOver(imgCard06));
         imgCard07.setOnMouseEntered(event -> MouseOver(imgCard07));
         imgCard08.setOnMouseEntered(event -> MouseOver(imgCard08));
@@ -123,7 +136,7 @@ public class TableController {
     	imgCard10.setImage(backImage);
     }
     
-    private void flipCard(ImageView cardView) {
+    private void flipPlayerCard(ImageView cardView) {
     	System.out.println(cardView.toString());    	
         Card card = cardMap.get(cardView);
         if(card.isFaceUp()) return;
@@ -131,16 +144,46 @@ public class TableController {
         cardView.setImage(new Image(card.getImagePath()));
         card.flipCard();
         game.playerDraw(card);
+        
+        flipEnemyCard();
     }
     
-    private void flipEnemyCard(ImageView cardView) {
-    	System.out.println(cardView.toString());    	
-        Card card = cardMap.get(cardView);
-        if(card.isFaceUp()) return;
+    private void flipEnemyCard() {
+    	Card card;
+    	ImageView iv = null;
+    	switch (EnemyFlipTime) {
+    	case 0:    		
+    		iv=imgCard01;
+    		break;
+    	case 1:
+    		iv=imgCard02;
+    		break;
+    	case 2:
+    		iv=imgCard03;
+    		break;
+    	case 3:
+    		iv=imgCard04;
+    		break;
+    	case 4:
+    		iv=imgCard05;
+    		break;
+    	}
+    	EnemyFlipTime++;
+    	if (EnemyFlipTime>4) {
+    		EnemyFlipTime=0;
+    		setReDeckVisible();
+    	}
+    	card = cardMap.get(iv);
         System.out.println(card.getImagePath());               
-        cardView.setImage(new Image(card.getImagePath()));
+        iv.setImage(new Image(card.getImagePath()));
         card.flipCard();
-        game.playerDraw(card);
+        game.EnemyDraw(card);
+        
+        game.DamageCalculate();
+        updatePlayerHp();
+        updateEnemyHp();
+        setMessage(game.getMessage());
+        if(!game.getIsRunning()) {setEndGame();}        
     }
     
     private void MouseOver(ImageView cardView) {
@@ -192,6 +235,93 @@ public class TableController {
         cardMap.put(imgCard08, game.getDeckPlayer().getCard(2));
         cardMap.put(imgCard09, game.getDeckPlayer().getCard(3));
         cardMap.put(imgCard10, game.getDeckPlayer().getCard(4));       
+    }
+    
+    public void setEnemyDeck() {
+    	cardMap.put(imgCard01, game.getDeckEnemy().getCard(0));
+        cardMap.put(imgCard02, game.getDeckEnemy().getCard(1));
+        cardMap.put(imgCard03, game.getDeckEnemy().getCard(2));
+        cardMap.put(imgCard04, game.getDeckEnemy().getCard(3));
+        cardMap.put(imgCard05, game.getDeckEnemy().getCard(4));       
+    }
+    
+    public void setReDeckVisible() {
+    	btnReDeck.setVisible(!btnReDeck.isVisible());
+    }
+    
+    public void setReDeckEvent() {
+    	btnReDeck.setOnMouseClicked(event -> reDeck());
+    }
+    
+    public void setNewGameVisible() {
+    	btnNewGame.setVisible(!btnNewGame.isVisible());
+    }
+    
+    public void setNewGameEvent() {
+    	btnNewGame.setOnMouseClicked(event -> NewGame());    	
+    	//Reset Hp to Max;
+    }
+    
+    public void setExitVisible() {
+    	btnExit.setVisible(!btnExit.isVisible());
+    }
+    
+    public void setExitEvent() {
+    	btnExit.setOnMouseClicked(event -> exit());
+    }
+    
+    public void reDeck() {
+    	setMessage("!!!REDECK!!!");
+    	setAllBackImage();
+    	cardMap.clear();
+    	game.resetDeck();
+    	setPlayerDeck();
+    	setEnemyDeck();
+    	setReDeckVisible();
+    }
+    
+    public void exit() {
+    	game.exit();
+    }
+    
+    public void setEndGame() {
+    	setPlayerClick(false);
+    	if(btnReDeck.isVisible()) {setReDeckVisible();};
+    	setNewGameVisible();
+    	setExitVisible();
+    }
+    
+    public void NewGame() {
+    	EnemyFlipTime=0;
+    	game.setNewGame();    	
+    	reDeck();
+    	if(btnReDeck.isVisible()) {setReDeckVisible();};
+    	setPlayerClick(true);
+    	setNewGameVisible();
+    	setExitVisible();
+    	updatePlayerHp();
+        updateEnemyHp();
+        setMessage("NEW GAME");
+    }
+    
+    public void setPlayerClick(boolean canClicked) {
+    	if (canClicked) {
+    		imgCard06.setOnMouseClicked(event -> flipPlayerCard(imgCard06));
+            imgCard07.setOnMouseClicked(event -> flipPlayerCard(imgCard07));
+            imgCard08.setOnMouseClicked(event -> flipPlayerCard(imgCard08));
+            imgCard09.setOnMouseClicked(event -> flipPlayerCard(imgCard09));
+            imgCard10.setOnMouseClicked(event -> flipPlayerCard(imgCard10));    		
+    	}else {
+    		imgCard06.setOnMouseClicked(null);
+        	imgCard07.setOnMouseClicked(null);
+        	imgCard08.setOnMouseClicked(null);
+        	imgCard09.setOnMouseClicked(null);
+        	imgCard10.setOnMouseClicked(null);
+    	}
+    }
+    
+    public void setMessage(String msg) {
+    	txtMessage.setText(msg);
     }
     
 }

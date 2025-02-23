@@ -41,24 +41,9 @@ public class Deck {
         return null; 
     }
     
-    // Draw a card from the deck
-    public Card drawCard() {
-        if (!cards.isEmpty()) {
-            return cards.remove(random.nextInt(cards.size())); // Remove and return random card
-        }
-        return null;
-    }
-
-    // Check if the deck is empty
-    public boolean isDeckEmpty() {
-        return cards.isEmpty();
-    }
-
     // Reload the deck if it's empty
-    public void reloadDeck() {
-        if (isDeckEmpty()) {
-            createDeck();  // Recreate deck with random cards
-        }
+    public void reloadDeck() {        
+        createDeck();  // Recreate deck with random cards
     }
 
 }

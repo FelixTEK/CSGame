@@ -17,12 +17,7 @@ public class GameCharecter implements  IGameCharecter {
         this.hp -= damage;
         if (this.hp < 0) this.hp = 0; // Prevent Negative HP
     }
-
-    public void heal(int amount) {
-        this.hp += amount;
-        if (this.hp > maxHp) this.hp=maxHp; //Prevent Over HP
-    }
-    
+  
     public boolean isAlive() {
     	if (hp > 0) {return true;} else {return false;}
 
