@@ -16,7 +16,7 @@ public class GameManagement {
     
     public void setNewGame() {
     	this.deckPlayer = new Deck();
-    	this.player = new GameCharecter("Babara", "/Resources/hero03.png", 200);
+    	this.player = new GameCharecter("Barbara", "/Resources/hero03.png", 200);
     	this.deckEnemy = new Deck();
     	this.enemy = new GameCharecter("Xeon", "/Resources/enemy04.png", 200);
     	this.isRunning = true;
