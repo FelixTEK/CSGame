@@ -9,18 +9,24 @@ public class GameManagement {
     private Card cardEnemy;
     private boolean isRunning;
     private String msg;
+    private music myMusic;
   
     public GameManagement() {
+    	myMusic = new music();
     	setNewGame();
     }
     
     public void setNewGame() {
     	this.deckPlayer = new Deck();
-    	this.player = new GameCharecter("Barbara", "/Resources/hero03.png", 200);
+    	this.player = new GameCharecter("Babara", "/Resources/hero03.png", 500);
     	this.deckEnemy = new Deck();
-    	this.enemy = new GameCharecter("Xeon", "/Resources/enemy04.png", 200);
+    	this.enemy = new GameCharecter("Xeon", "/Resources/enemy04.png", 500);
     	this.isRunning = true;
         this.msg="BATTLE BEGIN!!!";
+        myMusic.stopMusic();
+        myMusic.dispose();
+        myMusic.playMusic(true, 1);
+        
     }
     
     public void gameStart() {
