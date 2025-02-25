@@ -18,9 +18,9 @@ public class GameManagement {
     
     public void setNewGame() {
     	this.deckPlayer = new Deck();
-    	this.player = new GameCharecter("Babara", "/Resources/hero03.png", 500);
+    	this.player = new GameCharecter("Shindanai Rugniyom", "/Resources/hero03.png", 500);
     	this.deckEnemy = new Deck();
-    	this.enemy = new GameCharecter("Xeon", "/Resources/enemy04.png", 500);
+    	this.enemy = new GameCharecter("Suntana Oudomying", "/Resources/enemy04.png", 500);
     	this.isRunning = true;
         this.msg="BATTLE BEGIN!!!";
         myMusic.stopMusic();
