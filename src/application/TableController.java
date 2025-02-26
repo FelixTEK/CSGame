@@ -1,5 +1,6 @@
 package application;
 
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,8 +8,12 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import application.GameManagement.WhoGetDamage;
 
 public class TableController {
 
@@ -183,6 +188,11 @@ public class TableController {
         updatePlayerHp();
         updateEnemyHp();
         setMessage(game.getMessage());
+        
+        if(game.who==WhoGetDamage.enemy) {imageShake(imgEnemy);}
+        if(game.who==WhoGetDamage.player) {imageShake(imgPlayer);}
+        
+        
         if(!game.getIsRunning()) {setEndGame();}        
     }
     
@@ -202,6 +212,9 @@ public class TableController {
     public void setPlayerCharacter() {
     	txtPlayerName.setText(game.getPlayer().getName());
         imgPlayer.setImage(new Image(game.getPlayer().getImagePath()));
+        //Prevent Shack made lost position (Check Position at Scene Builder)
+        imgEnemy.setLayoutX(14);
+        imgEnemy.setLayoutY(486);
         // อัปเดตค่า HP
         updatePlayerHp();
     }
@@ -211,12 +224,14 @@ public class TableController {
         int hp = game.getPlayer().getHp();
         int maxHp= game.getPlayer().getMaxHp();
         pgbPlayerHp.setProgress((double) hp / maxHp);  // อัปเดต ProgressBar
-        txtPlayerHp.setText("HP: " + hp + "/" + maxHp);  // อัปเดต Text
+        txtPlayerHp.setText("HP: " + hp + "/" + maxHp);  // อัปเดต Text        
     }
 
     public void setEnemyCharacter() {
     	txtEnemyName.setText(game.getEnemy().getName());
         imgEnemy.setImage(new Image(game.getEnemy().getImagePath()));
+        imgEnemy.setLayoutX(14);
+        imgEnemy.setLayoutY(14);
         // อัปเดตค่า HP
         updateEnemyHp();
     }
@@ -293,7 +308,9 @@ public class TableController {
     
     public void NewGame() {
     	EnemyFlipTime=0;
-    	game.setNewGame();    	
+    	game.setNewGame();
+    	setPlayerCharacter();
+    	setEnemyCharacter();
     	reDeck();
     	if(btnReDeck.isVisible()) {setReDeckVisible();};
     	setPlayerClick(true);
@@ -322,6 +339,16 @@ public class TableController {
     
     public void setMessage(String msg) {
     	txtMessage.setText(msg);
+    }
+    
+    public void imageShake(ImageView img) {
+    	TranslateTransition translate = new TranslateTransition();
+    	translate.setNode(img);
+    	translate.setDuration(Duration.millis(80));
+    	translate.setByY(-20);
+    	translate.setAutoReverse(true);
+    	translate.setCycleCount(4);
+    	translate.play();
     }
     
 }

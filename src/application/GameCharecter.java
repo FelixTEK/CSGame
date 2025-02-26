@@ -1,12 +1,13 @@
 package application;
 
 public class GameCharecter implements  IGameCharecter {
-	private final String name;
+	private String name;
 	private int hp;
 	private final int maxHp;
-	private final String imagePath;
+	private String imagePath;
 
     public GameCharecter(String name,String imagePath,int maxHp) {
+    	System.out.println("Name: "+name+" path:"+imagePath+" hp: "+maxHp);
         this.name = name;
         this.imagePath=imagePath;
         this.maxHp = maxHp;
@@ -25,7 +26,11 @@ public class GameCharecter implements  IGameCharecter {
     
     public String getName() { return name; }
     
-    public String getImagePath() { return imagePath; }       
+    public String getImagePath() { return imagePath; }    
+    
+    public String setName(String newName) {return this.name=newName;}
+    
+    public String setImagePath(String newPath) {return this.imagePath=newPath;}
     
     @Override
     public int getHp() { return hp; }

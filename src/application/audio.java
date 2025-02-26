@@ -3,11 +3,10 @@ package application;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class music {
-	private MediaPlayer mediaPlayer;
-	private final static String filePath = "/Resources/music.mp3";
+public class audio {
+	private MediaPlayer mediaPlayer;	
     
-    public void playMusic(boolean loop, double initialVolume) {
+    public void playAudio(boolean loop, double initialVolume,String filePath) {
         try {
         	// ใช้ getResource เพื่อเข้าถึงไฟล์ใน Resources folder            
             Media sound = new Media(getClass().getResource(filePath).toExternalForm());
@@ -23,19 +22,18 @@ public class music {
             
             // เล่นเพลง
             mediaPlayer.play();
-            
         } catch (Exception e) {
             System.out.println("Error playing music: " + e.getMessage());
         }
     }
     
-    public void stopMusic() {
+    public void stopAudio() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
         }
     }
     
-    public void pauseMusic() {
+    public void pauseAudio() {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
