@@ -32,28 +32,44 @@ public class GameManagement {
   
     public GameManagement() {
     	
+    	imgListPlayer.add("/Resources/hero01.png");
     	imgListPlayer.add("/Resources/hero02.png");
     	imgListPlayer.add("/Resources/hero03.png");
     	imgListPlayer.add("/Resources/hero04.png");
     	imgListPlayer.add("/Resources/hero05.png");
+    	imgListPlayer.add("/Resources/hero06.png");
+    	imgListPlayer.add("/Resources/hero07.png");
+    	imgListPlayer.add("/Resources/hero08.png");
     	
+    	imgListEnemy.add("/Resources/enemy01.png");
     	imgListEnemy.add("/Resources/enemy02.png");
     	imgListEnemy.add("/Resources/enemy03.png");
     	imgListEnemy.add("/Resources/enemy04.png");
     	imgListEnemy.add("/Resources/enemy05.png");
     	imgListEnemy.add("/Resources/enemy06.png");
+    	imgListEnemy.add("/Resources/enemy07.png");
+    	imgListEnemy.add("/Resources/enemy08.png");
+    	imgListEnemy.add("/Resources/enemy09.png");
     	
     	//Number Name = Number of image
     	sPlayerName.add("Babara");
     	sPlayerName.add("Yomi");
     	sPlayerName.add("Aqua");
     	sPlayerName.add("Venus");
+    	sPlayerName.add("Yuki");
+    	sPlayerName.add("Maria");
+    	sPlayerName.add("Fubugi");
+    	sPlayerName.add("Aoi");
     	
     	sEnemyName.add("Lucifer");
     	sEnemyName.add("Mamon");
     	sEnemyName.add("Leviathan");
     	sEnemyName.add("Asmodeus");
     	sEnemyName.add("Belphegor");
+    	sEnemyName.add("Nightseeker");
+    	sEnemyName.add("Corpsescream");
+    	sEnemyName.add("Hollowling");
+    	sEnemyName.add("Cloudtooth");
     	
     	audioMusic = new audio();
     	audioDamage = new audio();

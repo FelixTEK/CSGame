@@ -88,6 +88,8 @@
                   <DropShadow blurType="ONE_PASS_BOX" height="15.14" radius="8.535" spread="0.49" />
                </effect>
             </Label>
+            <ImageView fx:id="imgEnemyShield" fitHeight="120.0" fitWidth="120.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgPlayerShield" fitHeight="120.0" fitWidth="120.0" layoutX="5.0" layoutY="475.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
    </center>

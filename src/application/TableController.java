@@ -1,5 +1,6 @@
 package application;
 
+import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +9,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import java.util.HashMap;
@@ -82,10 +84,17 @@ public class TableController {
     
     @FXML
     private Button btnExit;
+    
+    @FXML
+    private ImageView imgPlayerShield;
+    
+    @FXML
+    private ImageView imgEnemyShield;
       
 
     private final Map<ImageView, Card> cardMap = new HashMap<>();
     private final static Image backImage = new Image(CardType.getBackImagePath());  // รูปหลังไพ่
+    private final static Image shieldImage = new Image("/Resources/shield.png");
     private GameManagement game = new GameManagement();
     private int EnemyFlipTime = 0; //Enemy AutoFlip 1-5 time
    
@@ -113,6 +122,8 @@ public class TableController {
         setExitEvent();
 
         setPlayerClick(true);
+        
+        //setShieldImage();
                 
         imgCard06.setOnMouseEntered(event -> MouseOver(imgCard06));
         imgCard07.setOnMouseEntered(event -> MouseOver(imgCard07));
@@ -141,12 +152,19 @@ public class TableController {
     	imgCard10.setImage(backImage);
     }
     
+    public void setShieldImage() {
+    	imgPlayerShield.setImage(shieldImage);
+    	imgEnemyShield.setImage(shieldImage);
+    }
+    
     private void flipPlayerCard(ImageView cardView) {
     	System.out.println(cardView.toString());    	
         Card card = cardMap.get(cardView);
         if(card.isFaceUp()) return;
         System.out.println(card.getImagePath());               
-        cardView.setImage(new Image(card.getImagePath()));
+        cardView.setImage(new Image(card.getImagePath()));        
+        imageFlipEffect(cardView);
+        
         card.flipCard();
         game.playerDraw(card);
         
@@ -179,9 +197,12 @@ public class TableController {
     		setReDeckVisible();
     	}
     	card = cardMap.get(iv);
-        System.out.println(card.getImagePath());               
+        System.out.println("Image path:"+card.getImagePath());               
         iv.setImage(new Image(card.getImagePath()));
         card.flipCard();
+        
+        imageFlipEffect(iv);
+        
         game.EnemyDraw(card);
         
         game.DamageCalculate();
@@ -189,8 +210,8 @@ public class TableController {
         updateEnemyHp();
         setMessage(game.getMessage());
         
-        if(game.who==WhoGetDamage.enemy) {imageShake(imgEnemy);}
-        if(game.who==WhoGetDamage.player) {imageShake(imgPlayer);}
+        if(game.who==WhoGetDamage.enemy) {imageShakeEffect(imgEnemy);}
+        if(game.who==WhoGetDamage.player) {imageShakeEffect(imgPlayer);}
         
         
         if(!game.getIsRunning()) {setEndGame();}        
@@ -341,13 +362,23 @@ public class TableController {
     	txtMessage.setText(msg);
     }
     
-    public void imageShake(ImageView img) {
+    public void imageShakeEffect(ImageView img) {
     	TranslateTransition translate = new TranslateTransition();
     	translate.setNode(img);
     	translate.setDuration(Duration.millis(80));
     	translate.setByY(-20);
     	translate.setAutoReverse(true);
     	translate.setCycleCount(4);
+    	translate.play();
+    }
+    
+    public void imageFlipEffect(ImageView img) {
+    	RotateTransition translate = new RotateTransition();
+    	translate.setNode(img);
+    	translate.setDuration(Duration.millis(300));
+    	translate.setCycleCount(1);
+    	translate.setByAngle(180);
+    	translate.setAxis(Rotate.Y_AXIS);
     	translate.play();
     }
     
