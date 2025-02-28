@@ -7,4 +7,5 @@ public interface ICard {
     boolean isFaceUp();
     String getImagePath();
     void flipCard();
+    AttackType getAttackType(); 
 }

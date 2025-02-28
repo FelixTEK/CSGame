@@ -7,7 +7,6 @@ public class Card implements ICard {
     public Card(CardType type) {
         this.type =type;
     }
-
     @Override
     public int getAttack() { return type.getAttack(); }
     @Override
@@ -16,7 +15,8 @@ public class Card implements ICard {
     public int getHp() { return type.getHp(); }
     @Override
     public String getImagePath() { return type.getImagePath(); }
-
+    @Override
+    public AttackType getAttackType() {return type.getAttackType();}
     @Override
     public boolean isFaceUp() { return isFaceUp; }  
     @Override

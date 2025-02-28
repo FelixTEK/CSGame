@@ -3,6 +3,7 @@ package application;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -97,7 +98,7 @@ public class TableController {
     private final static Image shieldImage = new Image("/Resources/shield.png");
     private GameManagement game = new GameManagement();
     private int EnemyFlipTime = 0; //Enemy AutoFlip 1-5 time
-   
+      
     /**
      * 
      */
@@ -105,38 +106,27 @@ public class TableController {
     public void initialize() {
     	//imgCard01 - imgCard05 = Enemy Card
     	//imgCard06 - imgCard10 = Player Card    	
-        game.gameStart(); 
-        // สร้างไพ่และผูกกับ ImageView
-        
-
-        setPlayerCharacter();
+        game.gameStart();         
+        setPlayerCharacter(); //Setup name,image, HP player
         setEnemyCharacter();
-        setAllBackImage();
-        setPlayerDeck();
+        setAllBackImage(); //Setup all card to back image;
+        setPlayerDeck(); //Assign card class to hash map 
         setEnemyDeck();
-        setReDeckVisible();
-        setReDeckEvent();
-        setNewGameVisible();
+        setReDeckVisible(); //Set redeck's button visible off
+        setReDeckEvent(); //Assign redeck's button event
+        setNewGameVisible(); //Set new game's button
         setNewGameEvent();
-        setExitVisible();
+        setExitVisible(); //Set exit's button
         setExitEvent();
 
-        setPlayerClick(true);
+        setPlayerClick(true); //Assign card player clicked event Or Not
         
         //setShieldImage();
-                
-        imgCard06.setOnMouseEntered(event -> MouseOver(imgCard06));
-        imgCard07.setOnMouseEntered(event -> MouseOver(imgCard07));
-        imgCard08.setOnMouseEntered(event -> MouseOver(imgCard08));
-        imgCard09.setOnMouseEntered(event -> MouseOver(imgCard09));
-        imgCard10.setOnMouseEntered(event -> MouseOver(imgCard10));
         
-        imgCard06.setOnMouseExited(event -> MouseExit(imgCard06));
-        imgCard07.setOnMouseExited(event -> MouseExit(imgCard07));
-        imgCard08.setOnMouseExited(event -> MouseExit(imgCard08));
-        imgCard09.setOnMouseExited(event -> MouseExit(imgCard09));
-        imgCard10.setOnMouseExited(event -> MouseExit(imgCard10));
-
+        setHover(); //Assign mouse enter & exit event to player card
+                
+        
+        
     }
     
     public void setAllBackImage(){
@@ -339,7 +329,7 @@ public class TableController {
     	setExitVisible();
     	updatePlayerHp();
         updateEnemyHp();
-        setMessage("NEW GAME");
+        setMessage("NEW GAME");        
     }
     
     public void setPlayerClick(boolean canClicked) {
@@ -362,13 +352,14 @@ public class TableController {
     	txtMessage.setText(msg);
     }
     
-    public void imageShakeEffect(ImageView img) {
+    public void imageShakeEffect(ImageView img) {    	
     	TranslateTransition translate = new TranslateTransition();
-    	translate.setNode(img);
-    	translate.setDuration(Duration.millis(80));
-    	translate.setByY(-20);
-    	translate.setAutoReverse(true);
-    	translate.setCycleCount(4);
+    	translate.setNode(img); //Select object
+    	translate.setDuration(Duration.millis(80));  //Time for transition millisec
+    	translate.setByY(-20); //Axis+Distance for origin
+    	translate.setAutoReverse(true); 
+    	translate.setCycleCount(4); //Number's time to run
+    	translate.setOnFinished(event ->{img.setTranslateY(0);}); //After finish, image set to origin(Prevent image wrong position)
     	translate.play();
     }
     
@@ -380,6 +371,20 @@ public class TableController {
     	translate.setByAngle(180);
     	translate.setAxis(Rotate.Y_AXIS);
     	translate.play();
+    }
+    
+    private void setHover() {
+    	imgCard06.setOnMouseEntered(event -> MouseOver(imgCard06));
+        imgCard07.setOnMouseEntered(event -> MouseOver(imgCard07));
+        imgCard08.setOnMouseEntered(event -> MouseOver(imgCard08));
+        imgCard09.setOnMouseEntered(event -> MouseOver(imgCard09));
+        imgCard10.setOnMouseEntered(event -> MouseOver(imgCard10));
+        
+        imgCard06.setOnMouseExited(event -> MouseExit(imgCard06));
+        imgCard07.setOnMouseExited(event -> MouseExit(imgCard07));
+        imgCard08.setOnMouseExited(event -> MouseExit(imgCard08));
+        imgCard09.setOnMouseExited(event -> MouseExit(imgCard09));
+        imgCard10.setOnMouseExited(event -> MouseExit(imgCard10));    	
     }
     
 }

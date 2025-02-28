@@ -23,54 +23,12 @@ public class GameManagement {
     private audio audioMusic;
     private audio audioDamage;
     private audio audioWin;
-    WhoGetDamage who = WhoGetDamage.draw; 
-    private List<String> imgListPlayer = new ArrayList<>();
-    private List<String> imgListEnemy = new ArrayList<>();
-    private List<String> sPlayerName = new ArrayList<>();
-    private List<String> sEnemyName = new ArrayList<>();
+    public WhoGetDamage who = WhoGetDamage.draw; 
+    public AttackType winnerAttackType;
     private final Random random = new Random();
   
     public GameManagement() {
-    	
-    	imgListPlayer.add("/Resources/hero01.png");
-    	imgListPlayer.add("/Resources/hero02.png");
-    	imgListPlayer.add("/Resources/hero03.png");
-    	imgListPlayer.add("/Resources/hero04.png");
-    	imgListPlayer.add("/Resources/hero05.png");
-    	imgListPlayer.add("/Resources/hero06.png");
-    	imgListPlayer.add("/Resources/hero07.png");
-    	imgListPlayer.add("/Resources/hero08.png");
-    	
-    	imgListEnemy.add("/Resources/enemy01.png");
-    	imgListEnemy.add("/Resources/enemy02.png");
-    	imgListEnemy.add("/Resources/enemy03.png");
-    	imgListEnemy.add("/Resources/enemy04.png");
-    	imgListEnemy.add("/Resources/enemy05.png");
-    	imgListEnemy.add("/Resources/enemy06.png");
-    	imgListEnemy.add("/Resources/enemy07.png");
-    	imgListEnemy.add("/Resources/enemy08.png");
-    	imgListEnemy.add("/Resources/enemy09.png");
-    	
-    	//Number Name = Number of image
-    	sPlayerName.add("Babara");
-    	sPlayerName.add("Yomi");
-    	sPlayerName.add("Aqua");
-    	sPlayerName.add("Venus");
-    	sPlayerName.add("Yuki");
-    	sPlayerName.add("Maria");
-    	sPlayerName.add("Fubugi");
-    	sPlayerName.add("Aoi");
-    	
-    	sEnemyName.add("Lucifer");
-    	sEnemyName.add("Mamon");
-    	sEnemyName.add("Leviathan");
-    	sEnemyName.add("Asmodeus");
-    	sEnemyName.add("Belphegor");
-    	sEnemyName.add("Nightseeker");
-    	sEnemyName.add("Corpsescream");
-    	sEnemyName.add("Hollowling");
-    	sEnemyName.add("Cloudtooth");
-    	
+    	    	
     	audioMusic = new audio();
     	audioDamage = new audio();
     	audioWin = new audio();
@@ -78,14 +36,26 @@ public class GameManagement {
     }
     
     public void setNewGame() {    	
-    	
+    	int x =0 ;
     	getPlayerImage();
     	getEnemyImage();
     	this.isRunning = true;
         this.msg="BATTLE BEGIN!!!";
         audioMusic.stopAudio();
         audioMusic.dispose();
-        audioMusic.playAudio(true, 0.3, "/Resources/music.mp3");             
+        x = random.nextInt(3);
+        switch (x) {
+        case 0:
+        	audioMusic.playAudio(true, 0.5, "/Resources/music01.mp3");
+        	break;
+        case 1:
+        	audioMusic.playAudio(true, 0.5, "/Resources/music02.mp3");
+        	break;
+        case 2:
+        	audioMusic.playAudio(true, 0.5, "/Resources/music03.mp3");
+        	break;
+        }
+                     
     }
     
     public void gameStart() {
@@ -130,11 +100,16 @@ public class GameManagement {
     	int damageEnemy;
     	int damagePlayer;
     	int damageAdjust;
+    	
+    	//null to exit
     	if(cardPlayer==null || cardEnemy==null ) return;    	
     	// Attack - (Defense + HP)
+    	// Prevent Attack < Defense = No Damage = 0    	
     	if (cardPlayer.getAttack()<cardEnemy.getDefense()) {
     		damageAdjust =0;
     	}else {
+    		//x = attack - defense
+    		//x < HP card ==> No damage(Attack remain < HP card) ==> x=0
     		damageAdjust = cardPlayer.getAttack()-cardEnemy.getDefense();
     		if(damageAdjust < cardEnemy.getHp()) {
     			damageAdjust=0;
@@ -143,6 +118,7 @@ public class GameManagement {
     		}
     	}
     	damagePlayer = damageAdjust;
+    	    	
     	
     	if (cardEnemy.getAttack()<cardPlayer.getDefense()) {
     		damageAdjust =0;
@@ -155,35 +131,57 @@ public class GameManagement {
     		}
     	}
     	damageEnemy = damageAdjust;
-    	System.out.println("Player: "+damagePlayer+" Atk: "+cardPlayer.getAttack()+" Def: "+cardPlayer.getDefense()+" HP: "+cardPlayer.getHp());  
-    	System.out.println("Enemy: "+damageEnemy+" Atk: "+cardEnemy.getAttack()+" Def: "+cardEnemy.getDefense()+" HP: "+cardEnemy.getHp());
+    	System.out.println("Player: "+damagePlayer+" Atk: "+cardPlayer.getAttack()+" Def: "+cardPlayer.getDefense()+
+    			" HP: "+cardPlayer.getHp()+ " img: "+cardPlayer.getImagePath());  
+    	System.out.println("Enemy: "+damageEnemy+" Atk: "+cardEnemy.getAttack()+" Def: "+cardEnemy.getDefense()+
+    			" HP: "+cardEnemy.getHp()+ " img: "+cardEnemy.getImagePath());
     	//Damage Positive >> Decrease HP Enemy
     	//Damage <=0   >> No Damage
     	audioDamage.dispose();
-    	if(damagePlayer > damageEnemy) {
-    		enemy.takeDamage(damagePlayer-damageEnemy);
-    		this.msg="Enemy get damage "+(damagePlayer-damageEnemy)+" points!!!";
-    		this.who = WhoGetDamage.enemy;
-    		audioDamage.playAudio(false, 1,"/Resources/sfx_sword.mp3");
+    	
+    	//Damage Player > Enemy
+    	//Check attack type for sound effect
+    	//if attack type = HEAL => calculate point to heal(Difference damage Higher - damage Lesser)
+    	//WhoGetDamage use at Controller for choose imagePlaer/Enemy Shack
+    	if(damagePlayer > damageEnemy) {    		
+    		if(cardPlayer.getAttackType()==AttackType.HEAL) {
+    			player.heal(damagePlayer-damageEnemy);
+    			this.msg="Player Heal "+(damagePlayer-damageEnemy)+" points!!!";
+        		this.who = WhoGetDamage.draw;        		
+    		}else {
+    			enemy.takeDamage(damagePlayer-damageEnemy);
+    			this.msg="Enemy get damage "+(damagePlayer-damageEnemy)+" points!!!";
+        		this.who = WhoGetDamage.enemy;
+
+    		}
+    		this.winnerAttackType=cardPlayer.getAttackType(); //for effect    		    		    		
     	}else if (damagePlayer == damageEnemy) {
     		this.msg="No damage!!!";
     		this.who = WhoGetDamage.draw;
-    		audioDamage.playAudio(false, 1,"/Resources/sfx_shield.mp3");
+    		this.winnerAttackType = AttackType.NONE;
     		//Draw
-    	}else {
-    		player.takeDamage(damageEnemy-damagePlayer);
-    		this.msg="Player get damage "+(damageEnemy-damagePlayer)+" points!!!";
-    		this.who = WhoGetDamage.player;
-    		audioDamage.playAudio(false, 1,"/Resources/sfx_hit.wav");
+    	}else { //Damage Enemy > Player 
+    		if(cardEnemy.getAttackType()==AttackType.HEAL) {
+    			enemy.heal(damageEnemy-damagePlayer);
+    			this.msg="Enemy Heal "+(damageEnemy-damagePlayer)+" points!!!";
+        		this.who = WhoGetDamage.draw;
+    		}else {    			
+    			player.takeDamage(damageEnemy-damagePlayer);
+        		this.msg="Player get damage "+(damageEnemy-damagePlayer)+" points!!!";
+        		this.who = WhoGetDamage.player;	
+    		}
+    		this.winnerAttackType=cardEnemy.getAttackType(); //for effect
     	}
+    	System.out.println(this.winnerAttackType);
+    	audioDamage.playAudio(false, 1,getSoundAttack(this.winnerAttackType));
     	
     	
     	//Check HP = 0 End Game
-    	audioWin.dispose();
+    	audioWin.dispose(); //Stop audio Win for new play
     	if(!enemy.isAlive()) {
     		this.msg="****** ^ ^ YOU WIN ^ ^ ********";
     		gameStop();
-    		audioWin.playAudio(false, 1,"/Resources/sfx_playerwin.wav");
+    		audioWin.playAudio(false, 1,"/Resources/sfx_playerwin.mp3");
     	}
     	if(!player.isAlive()) {
     		this.msg="****** T T  YOU LOSE T T ********";
@@ -204,17 +202,46 @@ public class GameManagement {
     
     private void getPlayerImage() {
     	int x;
-    	x = random.nextInt(imgListPlayer.size());
+    	// .values = get all data from enum
+    	GameCharecterAsset[] asset = GameCharecterAsset.values();
+    	//Number player = 8 (Asset player in GameCharecterAsset)
+    	//+9 = number's enemy asset
+    	//random 8[0..7]   
+    	//min=0  >> 0+9 = 9
+    	//max=7 >> 7+9 = 16
+    	x = random.nextInt(8)+9;
     	System.out.println(x);
     	this.deckPlayer = new Deck();
-    	this.player = new GameCharecter(sPlayerName.get(x), imgListPlayer.get(x), 500);    	
+    	this.player = new GameCharecter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp());    	
     }
     private void getEnemyImage() {
     	int x;
-    	x = random.nextInt(imgListEnemy.size());
+    	GameCharecterAsset[] asset = GameCharecterAsset.values();
+    	x = random.nextInt(9); //[0..8]
     	System.out.println(x);
     	this.deckEnemy = new Deck();
-    	this.enemy = new GameCharecter(sEnemyName.get(x), imgListEnemy.get(x), 500);
+    	this.enemy = new GameCharecter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp());
+    }
+    private String getSoundAttack(AttackType type) {
+    	String path = "";
+    	switch (type){
+    	case AttackType.NONE:
+    		path = "/Resources/sfx_draw.mp3";
+    		break;
+    	case AttackType.PHYSICAL:
+    		path = "/Resources/sfx_sword.mp3";
+    		break;
+    	case AttackType.MAGIC:
+    		path = "/Resources/sfx_magic.mp3";
+    		break;
+    	case AttackType.HEAL:
+    		path = "/Resources/sfx_heal.mp3";
+    		break;
+    	case AttackType.SHIELD:
+    		path = "/Resources/sfx_shield.mp3";
+    		break;
+    	}
+    	return path;
     }
     
 }

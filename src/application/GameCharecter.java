@@ -4,7 +4,7 @@ public class GameCharecter implements  IGameCharecter {
 	private String name;
 	private int hp;
 	private final int maxHp;
-	private String imagePath;
+	private String imagePath;	
 
     public GameCharecter(String name,String imagePath,int maxHp) {
     	System.out.println("Name: "+name+" path:"+imagePath+" hp: "+maxHp);
@@ -36,4 +36,9 @@ public class GameCharecter implements  IGameCharecter {
     public int getHp() { return hp; }
     @Override
     public int getMaxHp() { return maxHp; }
+    
+    public void heal(int value) {
+    	this.hp += value;
+    	if(this.hp > this.maxHp) this.hp=this.maxHp; //Prevent Overflow HP
+    }
 }
