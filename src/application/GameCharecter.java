@@ -4,14 +4,15 @@ public class GameCharecter implements  IGameCharecter {
 	private String name;
 	private int hp;
 	private final int maxHp;
-	private String imagePath;	
+	private String imagePath;
+	private double probability;
 
-    public GameCharecter(String name,String imagePath,int maxHp) {
-    	System.out.println("Name: "+name+" path:"+imagePath+" hp: "+maxHp);
+    public GameCharecter(String name,String imagePath,int maxHp,double probability) {    	
         this.name = name;
         this.imagePath=imagePath;
         this.maxHp = maxHp;
         this.hp = maxHp; // Start HP = Max HP
+        this.probability=probability;
     }
 
     public void takeDamage(int damage) {
@@ -40,5 +41,16 @@ public class GameCharecter implements  IGameCharecter {
     public void heal(int value) {
     	this.hp += value;
     	if(this.hp > this.maxHp) this.hp=this.maxHp; //Prevent Overflow HP
+    }
+    
+    public double getProbability() {return probability;}
+    public void  setProbability(double Value) {
+    	this.probability=Value;
+    }
+
+    public void debug() {
+    	String x;
+    	x="Name : "+getName()+" Image Path: "+getImagePath()+" HP: "+getHp()+"/"+getMaxHp()+" Prop: "+getProbability();
+    	System.out.println(x);
     }
 }

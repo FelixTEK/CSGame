@@ -1,7 +1,5 @@
 package application;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class GameManagement {
@@ -210,17 +208,17 @@ public class GameManagement {
     	//min=0  >> 0+9 = 9
     	//max=7 >> 7+9 = 16
     	x = random.nextInt(8)+9;
-    	System.out.println(x);
-    	this.deckPlayer = new Deck();
-    	this.player = new GameCharecter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp());    	
+    	this.player = new GameCharecter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp(),asset[x].getProbability());
+    	player.debug();
+    	this.deckPlayer = new Deck(player.getProbability());
     }
     private void getEnemyImage() {
     	int x;
     	GameCharecterAsset[] asset = GameCharecterAsset.values();
-    	x = random.nextInt(9); //[0..8]
-    	System.out.println(x);
-    	this.deckEnemy = new Deck();
-    	this.enemy = new GameCharecter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp());
+    	x = random.nextInt(9); //[0..8]   	
+    	this.enemy = new GameCharecter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp(),asset[x].getProbability());
+    	enemy.debug();
+    	this.deckEnemy = new Deck(enemy.getProbability());
     }
     private String getSoundAttack(AttackType type) {
     	String path = "";

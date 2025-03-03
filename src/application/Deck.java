@@ -9,17 +9,32 @@ public class Deck {
 	private final List<Card> cards = new ArrayList<>();
 	private final Random random = new Random();
 	private final static int maxDeckSize = 5;
+	private double probabilityHeal;
 	
-	public Deck() {
+	public Deck(double prob) {
+		setProbability(prob);
         createDeck();
     }
 	
     //Random from ENUM CardType
     private CardType getRandomCardType() {
+    	int x;
+    	double y;
     	//get All CardType
         CardType[] types = CardType.values();
-        // types.length = 16 and generate random 0 - 15        
-        return types[random.nextInt(types.length)]; 
+        // types.length = 16 and generate random 0 - 15       
+        x=random.nextInt(types.length);
+        //generate number double >> 0.0-1.0
+        //if generate number < probability get heal card then get heal card
+        System.out.println("Random Int(x) : "+x);
+        
+        y=random.nextDouble();
+        if(y<this.probabilityHeal) {
+        	x=8; //CLERIC = Card No 8 in Card type
+        }
+        System.out.println(" Random Double(y) : "+y+" Probability : "+this.probabilityHeal+" Last x: "+x);
+        
+        return types[x]; 
     }
     
     private void createDeck() {
@@ -45,5 +60,8 @@ public class Deck {
     public void reloadDeck() {        
         createDeck();  // Recreate deck with random cards
     }
-
+    
+    public void setProbability(double Values) {
+    	this.probabilityHeal=Values;
+    }
 }

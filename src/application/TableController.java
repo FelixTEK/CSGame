@@ -148,10 +148,10 @@ public class TableController {
     }
     
     private void flipPlayerCard(ImageView cardView) {
-    	System.out.println(cardView.toString());    	
+    	//System.out.println(cardView.toString());    	
         Card card = cardMap.get(cardView);
         if(card.isFaceUp()) return;
-        System.out.println(card.getImagePath());               
+        //System.out.println(card.getImagePath());               
         cardView.setImage(new Image(card.getImagePath()));        
         imageFlipEffect(cardView);
         
@@ -187,7 +187,7 @@ public class TableController {
     		setReDeckVisible();
     	}
     	card = cardMap.get(iv);
-        System.out.println("Image path:"+card.getImagePath());               
+        //System.out.println("Image path:"+card.getImagePath());               
         iv.setImage(new Image(card.getImagePath()));
         card.flipCard();
         
@@ -224,8 +224,8 @@ public class TableController {
     	txtPlayerName.setText(game.getPlayer().getName());
         imgPlayer.setImage(new Image(game.getPlayer().getImagePath()));
         //Prevent Shack made lost position (Check Position at Scene Builder)
-        imgEnemy.setLayoutX(14);
-        imgEnemy.setLayoutY(486);
+        //imgEnemy.setLayoutX(14);
+        //imgEnemy.setLayoutY(486);
         // อัปเดตค่า HP
         updatePlayerHp();
     }
