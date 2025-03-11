@@ -18,9 +18,9 @@ public class GameManagement {
     private Card cardEnemy;
     private boolean isRunning;
     private String msg;
-    private audio audioMusic;
-    private audio audioDamage;
-    private audio audioWin;
+    private audio audioMusic; //like stream
+    private audio audioDamage; //like stream
+    private audio audioWin; //like stream
     public WhoGetDamage who = WhoGetDamage.draw; 
     public AttackType winnerAttackType;
     private final Random random = new Random();
@@ -39,9 +39,9 @@ public class GameManagement {
     	getEnemyImage();
     	this.isRunning = true;
         this.msg="BATTLE BEGIN!!!";
-        audioMusic.stopAudio();
-        audioMusic.dispose();
-        x = random.nextInt(3);
+        audioMusic.stopAudio(); //stop audio
+        audioMusic.dispose(); //stop audio
+        x = random.nextInt(4);
         switch (x) {
         case 0:
         	audioMusic.playAudio(true, 0.5, "/Resources/music01.mp3");
@@ -52,10 +52,13 @@ public class GameManagement {
         case 2:
         	audioMusic.playAudio(true, 0.5, "/Resources/music03.mp3");
         	break;
+        case 3:
+        	audioMusic.playAudio(true, 0.5, "/Resources/music04.mp3");
+        	break;
         }
                      
     }
-    
+    //game start
     public void gameStart() {
     	System.out.println("game start");
     	this.isRunning=true;
@@ -70,30 +73,37 @@ public class GameManagement {
     	System.exit(0);
     }
     
+    //player จั่วไพ่
     public void playerDraw(Card card) {
     	this.cardPlayer = card;    	
     }
     
+    //ศัตรูจั่วไพ่ 
     public void EnemyDraw(Card card) {
         this.cardEnemy = card;
     }
        
+    //สร้าง instance ของ player
     public GameCharecter getPlayer() {
         return player;
     }
 
+    //สร้าง instance ของศัตรู
     public GameCharecter getEnemy() {
         return enemy;
     }
     
+    //สร้าง deck player
     public Deck getDeckPlayer() {
     	return deckPlayer;
     }
     
+    //สร้าง deck ศัตรู
     public Deck getDeckEnemy() {
     	return deckEnemy;
     }
     
+    //คำนวณ dmg
     public void DamageCalculate() {
     	int damageEnemy;
     	int damagePlayer;
@@ -188,7 +198,7 @@ public class GameManagement {
     	}
     }
     
-    
+    //reset to unopened cards
     public void resetDeck() {
     	deckPlayer.reloadDeck();
     	deckEnemy.reloadDeck();
@@ -198,6 +208,7 @@ public class GameManagement {
     
     public String getMessage() {return this.msg;}
     
+    //random ที่นี่
     private void getPlayerImage() {
     	int x;
     	// .values = get all data from enum
