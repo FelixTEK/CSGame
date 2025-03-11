@@ -4,7 +4,7 @@ public enum CardType {
 		
 	//Name(ATK,DEF,HP,ImagePath)
 	PALADIN(100,100,50,"/Resources/c01.png",AttackType.PHYSICAL),
-	GUARDUAN(80,150,60,"/Resources/c02.png",AttackType.PHYSICAL),
+	GUARDIAN(80,150,60,"/Resources/c02.png",AttackType.PHYSICAL),
 	MONK(120,80,30,"/Resources/c03.png",AttackType.PHYSICAL),
 	BARBARIAN(90,90,40,"/Resources/c04.png",AttackType.PHYSICAL),
 	ASSASSIN(180,80,20,"/Resources/c05.png",AttackType.PHYSICAL),
