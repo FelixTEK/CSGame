@@ -10,8 +10,8 @@ public class GameManagement {
 		draw
 	}
 	
-	private GameCharecter player;
-    private GameCharecter enemy;
+	private GameCharacter player;
+    private GameCharacter enemy;
     private Deck deckPlayer;
     private Deck deckEnemy;
     private Card cardPlayer;
@@ -78,11 +78,11 @@ public class GameManagement {
         this.cardEnemy = card;
     }
        
-    public GameCharecter getPlayer() {
+    public GameCharacter getPlayer() {
         return player;
     }
 
-    public GameCharecter getEnemy() {
+    public GameCharacter getEnemy() {
         return enemy;
     }
     
@@ -201,22 +201,22 @@ public class GameManagement {
     private void getPlayerImage() {
     	int x;
     	// .values = get all data from enum
-    	GameCharecterAsset[] asset = GameCharecterAsset.values();
-    	//Number player = 8 (Asset player in GameCharecterAsset)
+    	GameCharacterAsset[] asset = GameCharacterAsset.values();
+    	//Number player = 8 (Asset player in GameCharacterAsset)
     	//+9 = number's enemy asset
     	//random 8[0..7]   
     	//min=0  >> 0+9 = 9
     	//max=7 >> 7+9 = 16
     	x = random.nextInt(8)+9;
-    	this.player = new GameCharecter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp(),asset[x].getProbability());
+    	this.player = new GameCharacter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp(),asset[x].getProbability());
     	player.debug();
     	this.deckPlayer = new Deck(player.getProbability());
     }
     private void getEnemyImage() {
     	int x;
-    	GameCharecterAsset[] asset = GameCharecterAsset.values();
+    	GameCharacterAsset[] asset = GameCharacterAsset.values();
     	x = random.nextInt(9); //[0..8]   	
-    	this.enemy = new GameCharecter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp(),asset[x].getProbability());
+    	this.enemy = new GameCharacter(asset[x].getName(),asset[x].getImagePath(),asset[x].getMaxHp(),asset[x].getProbability());
     	enemy.debug();
     	this.deckEnemy = new Deck(enemy.getProbability());
     }

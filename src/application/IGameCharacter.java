@@ -1,6 +1,6 @@
 package application;
 
-public interface IGameCharecter {
+public interface IGameCharacter {
     void takeDamage(int damage);
     int getHp();
     int getMaxHp();

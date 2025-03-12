@@ -1,13 +1,13 @@
 package application;
 
-public class GameCharecter implements  IGameCharecter {
+public class GameCharacter implements  IGameCharacter {
 	private String name;
 	private int hp;
 	private final int maxHp;
 	private String imagePath;
 	private double probability;
 
-    public GameCharecter(String name,String imagePath,int maxHp,double probability) {    	
+    public GameCharacter(String name,String imagePath,int maxHp,double probability) {    	
         this.name = name;
         this.imagePath=imagePath;
         this.maxHp = maxHp;

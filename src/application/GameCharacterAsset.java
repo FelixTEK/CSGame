@@ -1,6 +1,6 @@
 package application;
 
-public enum GameCharecterAsset {
+public enum GameCharacterAsset {
 	enemy01("Suntanios OOPBoss","/Resources/enemy01.png",Integer.MAX_VALUE,Type.ENEMY,0.01),
 	enemy02("Asmodeus","/Resources/enemy02.png",300,Type.ENEMY,0.01),
 	enemy03("Istaroth","/Resources/enemy03.png",500,Type.ENEMY,0.01),
@@ -28,7 +28,7 @@ public enum GameCharecterAsset {
 	private final Type type;
 	private final double probability;
 	
-	GameCharecterAsset(String name,String path,int hp, Type type,double probability){
+	GameCharacterAsset(String name,String path,int hp, Type type,double probability){
 		this.name=name;
 		this.imagePath=path;
 		this.maxHp=hp;
