@@ -97,7 +97,7 @@ public class TableController {
     private final static Image backImage = new Image(CardType.getBackImagePath());  // รูปหลังไพ่
     private final static Image shieldImage = new Image("/Resources/shield.png");
     private GameManagement game = new GameManagement();
-    private int EnemyFlipTime = 0; //Enemy AutoFlip 1-5 time
+    private int EnemyFlipTime = 0; //Enemy AutoFlip 1-5 time // enemy flip how many times?
       
     /**
      * 
@@ -150,7 +150,7 @@ public class TableController {
     private void flipPlayerCard(ImageView cardView) {
     	//System.out.println(cardView.toString());    	
         Card card = cardMap.get(cardView);
-        if(card.isFaceUp()) return;
+        if(card.isFaceUp()) return; //ถ้าถูกเปลี่ยนให้หงายแล้ว ให้จบเลย (flip อีกไม่ได้แล้ว)
         //System.out.println(card.getImagePath());               
         cardView.setImage(new Image(card.getImagePath()));        
         imageFlipEffect(cardView);
@@ -232,7 +232,7 @@ public class TableController {
 
     // ฟังก์ชั่นอัปเดตค่า HP ของผู้เล่นใน UI
     public void updatePlayerHp() {
-        int hp = game.getPlayer().getHp();
+    	int hp = game.getPlayer().getHp();
         int maxHp= game.getPlayer().getMaxHp();
         pgbPlayerHp.setProgress((double) hp / maxHp);  // อัปเดต ProgressBar
         txtPlayerHp.setText("HP: " + hp + "/" + maxHp);  // อัปเดต Text        
