@@ -1,7 +1,7 @@
 package application;
 
 public enum GameCharacterAsset {
-	enemy01("Suntanios OOPBoss","/Resources/enemy01.png",Integer.MAX_VALUE,Type.ENEMY,0.01),
+	enemy01("Suntanios OOPBoss","/Resources/enemy01.png",1000,Type.ENEMY,0.01),
 	enemy02("Asmodeus","/Resources/enemy02.png",300,Type.ENEMY,0.01),
 	enemy03("Istaroth","/Resources/enemy03.png",500,Type.ENEMY,0.01),
 	enemy04("Makarova","/Resources/enemy04.png",400,Type.ENEMY,0.01),
@@ -9,7 +9,7 @@ public enum GameCharacterAsset {
 	enemy06("Beelzebub","/Resources/enemy06.png",500,Type.ENEMY,0.01),
 	enemy07("Andreus","/Resources/enemy07.png",700,Type.ENEMY,0.01),
 	enemy08("Barbatos","/Resources/enemy08.png",400,Type.ENEMY,0.01),
-	enemy09("Paimon","/Resources/enemy09.png",500,Type.ENEMY,0.01),
+	enemy09("Frederik","/Resources/enemy09.png",500,Type.ENEMY,0.01),
 	
 	player01("Jeanne","/Resources/hero01.png",500,Type.PLAYER,0.2),
 	player02("Devika","/Resources/hero02.png",400,Type.PLAYER,0.2),

@@ -88,7 +88,7 @@ public class GameManagement {
         return player;
     }
 
-    public GameCharecter getEnemy() {
+    public GameCharacter getEnemy() {
         return enemy;
     }
     
