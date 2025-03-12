@@ -18,9 +18,6 @@ public class GameManagement {
     private Card cardEnemy;
     private boolean isRunning;
     private String msg;
-    private audio audioMusic;
-    private audio audioDamage;
-    private audio audioWin;
     private audio audioMusic; //like stream
     private audio audioDamage; //like stream
     private audio audioWin; //like stream
@@ -42,9 +39,6 @@ public class GameManagement {
     	getEnemyImage();
     	this.isRunning = true;
         this.msg="BATTLE BEGIN!!!";
-        audioMusic.stopAudio();
-        audioMusic.dispose();
-        x = random.nextInt(3);
         audioMusic.stopAudio(); //stop audio
         audioMusic.dispose(); //stop audio
         x = random.nextInt(4);
