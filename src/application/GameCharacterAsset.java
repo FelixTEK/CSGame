@@ -9,7 +9,7 @@ public enum GameCharacterAsset {
 	enemy06("Beelzebub","/Resources/enemy06.png",500,Type.ENEMY,0.01),
 	enemy07("Andreus","/Resources/enemy07.png",700,Type.ENEMY,0.01),
 	enemy08("Barbatos","/Resources/enemy08.png",400,Type.ENEMY,0.01),
-	enemy09("Frederik","/Resources/enemy09.png",500,Type.ENEMY,0.01),
+	enemy09("Amogus","/Resources/enemy09.png",500,Type.ENEMY,0.01),
 	
 	player01("Jeanne","/Resources/hero01.png",500,Type.PLAYER,0.2),
 	player02("Devika","/Resources/hero02.png",400,Type.PLAYER,0.2),
