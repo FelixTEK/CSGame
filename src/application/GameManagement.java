@@ -34,7 +34,7 @@ public class GameManagement {
     }
     
     public void setNewGame() {    	
-    	int x =0 ;
+    	int x = 0 ;
     	getPlayerImage();
     	getEnemyImage();
     	this.isRunning = true;
